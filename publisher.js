@@ -23,16 +23,14 @@ async function startPublisher() {
       const jsonMessage = JSON.stringify(message);
 
         //amqp-client function expects: publish(exchange, routingKey, message, options)
-        await q.publish('emails', { routingKey }, jsonMessage)
-        console.log("[📥] Message sent to queue", message)
+        const myData = await q.publish('emails', { routingKey }, jsonMessage)
+        console.log("[📥] Message sent to queue", myData)
     }
 
     //Send some messages to the queue
-    sendToQueue("notification", "example@example.com", "John Doe", "Your order has been received");
-    sendToQueue("notification", "example@example.com", "Jane Doe", "The product is back in stock");
-    sendToQueue("resetpassword", "example@example.com", "Willem Dafoe", "Here is your new password");
-
-
+      sendToQueue("notification", "example@example.com", "John Doe", "Your order has been received");
+      sendToQueue("notification", "example@example.com", "Jane Doe", "The product is back in stock");
+      sendToQueue("resetpassword", "example@example.com", "Willem Dafoe", "Here is your new password");
    setTimeout(() => {
       //Close the connection
       connection.close()
